@@ -24,7 +24,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
                 .requestMatchers("/api/v1/users/addUser","/api/v1/users/login").permitAll() //this type of request shouldn't be authenticated, it is open for all
                 .requestMatchers("/api/v1/countries/addCountry","/api/v1/countries/deleteCountry/{id}","/api/v1/favourite","/api/v1/properties/addProperty",
-                        "/api/v1/properties/deleteProperty/{id}").hasRole("ADMIN") //makes the url only accessible for ADMIN
+                        "/api/v1/properties/deleteProperty/{id}","/api/v1/images/upload/{bucketName}/property/{propertyId}","/s3bucket/upload/file/{bucketName}").hasRole("ADMIN") //makes the url only accessible for ADMIN
                 .requestMatchers("/api/v1/properties/{locationName}","/api/v1/reviews/addReview/{propertyId}").hasRole("USER")
                 .requestMatchers("api/v1/users/profile").hasAnyRole("ADMIN","USER") //makes the url accessible for ADMIN and USER
                 .requestMatchers("/actuator/**").permitAll()
