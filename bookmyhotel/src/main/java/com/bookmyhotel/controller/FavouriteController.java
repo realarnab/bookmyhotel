@@ -1,9 +1,7 @@
 package com.bookmyhotel.controller;
 
 import com.bookmyhotel.dto.FavouriteDto;
-import com.bookmyhotel.entity.Favourite;
 import com.bookmyhotel.entity.PropertyUser;
-import com.bookmyhotel.repository.FavouriteRepository;
 import com.bookmyhotel.service.FavouriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -2,9 +2,7 @@ package com.bookmyhotel.controller;
 
 import com.bookmyhotel.dto.PropertyDto;
 import com.bookmyhotel.entity.Property;
-import com.bookmyhotel.repository.PropertyRepository;
 import com.bookmyhotel.service.PropertyService;
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
