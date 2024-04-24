@@ -41,4 +41,10 @@ public class PropertyController {
         propertyService.removeProperty(id);
         return new ResponseEntity<>("Property deleted successfully",HttpStatus.OK);
     }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<Property>> getAllProperties(){
+        List<Property> all = propertyService.getAll();
+        return new ResponseEntity<>(all,HttpStatus.OK);
+    }
 }

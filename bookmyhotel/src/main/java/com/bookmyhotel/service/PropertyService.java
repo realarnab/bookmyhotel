@@ -11,4 +11,6 @@ public interface PropertyService {
     PropertyDto addCountry(PropertyDto dto);
 
     void removeProperty(long id);
+
+    List<Property> getAll();
 }

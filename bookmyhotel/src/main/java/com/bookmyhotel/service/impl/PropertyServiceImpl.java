@@ -38,6 +38,12 @@ public class PropertyServiceImpl implements PropertyService {
         }
     }
 
+    @Override
+    public List<Property> getAll() {
+        List<Property> all = propertyRepository.findAll();
+        return all;
+    }
+
     public Property mapToEntity(PropertyDto dto){
         return modelMapper.map(dto,Property.class);
     }
