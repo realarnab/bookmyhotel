@@ -1,19 +1,12 @@
 package com.bookmyhotel.service.impl;
 
-import com.bookmyhotel.dto.ReviewDto;
 import com.bookmyhotel.entity.Property;
 import com.bookmyhotel.entity.PropertyUser;
 import com.bookmyhotel.entity.Review;
 import com.bookmyhotel.repository.PropertyRepository;
 import com.bookmyhotel.repository.ReviewRepository;
 import com.bookmyhotel.service.ReviewService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;

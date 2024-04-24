@@ -11,6 +11,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BookingServiceImpl implements BookingService {
 
@@ -38,6 +40,12 @@ public class BookingServiceImpl implements BookingService {
         booking.setProperty(property);
         Booking save = bookingRepository.save(booking);
         return mapToDto(save);
+    }
+
+    @Override
+    public List<Booking> getAllBookingsByUser(PropertyUser user) {
+        List<Booking> bookings = bookingRepository.findByPropertyUser(user);
+        return bookings;
     }
 
     public Booking mapToEntity(BookingDto dto){
