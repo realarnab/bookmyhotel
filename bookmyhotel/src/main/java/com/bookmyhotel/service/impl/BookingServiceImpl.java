@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -46,6 +47,32 @@ public class BookingServiceImpl implements BookingService {
     public List<Booking> getAllBookingsByUser(PropertyUser user) {
         List<Booking> bookings = bookingRepository.findByPropertyUser(user);
         return bookings;
+    }
+
+    @Override
+    public void deleteBooking(PropertyUser user, long id) {
+        List<Booking> bookings = bookingRepository.findByPropertyUser(user);
+//
+//        int index = -1;
+//        for (int i = 0; i <= bookings.size(); i++){
+//            if (bookings.get(i).getId() == id){
+//                index = i;
+//                break;
+//            }
+//        }
+//        if (index == -1){ //if booking not found, throw an exception
+//            throw new RuntimeException("Booking not found");
+//        }
+//        //remove the booking from the list
+//        bookings.remove(index);
+        Iterator<Booking> iterator = bookings.iterator();
+        while (iterator.hasNext()){
+            Booking booking = iterator.next();
+            if (booking.getId() == id){
+                iterator.remove();
+                return;
+            }
+        }
     }
 
     public Booking mapToEntity(BookingDto dto){

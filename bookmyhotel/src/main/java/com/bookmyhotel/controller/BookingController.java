@@ -31,4 +31,10 @@ public class BookingController {
         return new ResponseEntity<>(allBookings,HttpStatus.OK);
     }
 
+    @DeleteMapping("/deleteBooking/{id}")
+    public ResponseEntity<?> deleteBooking(@PathVariable long id, @AuthenticationPrincipal PropertyUser propertyUser){
+        bookingService.deleteBooking(propertyUser,id);
+        return new ResponseEntity<>("Booking cancel successfully",HttpStatus.OK);
+    }
+
 }

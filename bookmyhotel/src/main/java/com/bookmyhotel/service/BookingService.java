@@ -10,4 +10,5 @@ import java.util.List;
 public interface BookingService {
     public BookingDto addBooking(BookingDto dto, PropertyUser user,long propertyId);
     public List<Booking> getAllBookingsByUser(PropertyUser user);
+    public void deleteBooking(PropertyUser user, long id);
 }
