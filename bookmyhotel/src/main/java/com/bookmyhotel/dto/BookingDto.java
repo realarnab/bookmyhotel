@@ -7,11 +7,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookingDto {
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
     private Integer totalPrice;
     private Integer totalNights;
     private String guestName;

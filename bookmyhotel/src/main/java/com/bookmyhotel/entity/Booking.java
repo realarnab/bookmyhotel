@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @Entity
@@ -13,6 +15,12 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    @Column(name = "check_in_date", nullable = false)
+    private LocalDate checkInDate;
+
+    @Column(name = "check_out_date", nullable = false)
+    private LocalDate checkOutDate;
 
     @Column(name = "total_price")
     private Integer totalPrice;

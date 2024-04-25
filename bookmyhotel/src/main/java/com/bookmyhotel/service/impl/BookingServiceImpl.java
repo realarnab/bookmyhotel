@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 
@@ -33,10 +34,25 @@ public class BookingServiceImpl implements BookingService {
 
         Property property = propertyRepository.findById(propertyId).get();
 
+        // Calculate check-in date as today's date
+        LocalDate checkInDate = LocalDate.now();
+
+        // Calculate check-out date by adding total nights to the check-in date
+        LocalDate checkOutDate = checkInDate.plusDays(dto.getTotalNights());
+
+        // Validate availability of property for the given dates
+        boolean isPropertyAvailable = bookingRepository.checkAvailability(propertyId, checkInDate, checkOutDate);
+        if (!isPropertyAvailable) {
+            throw new IllegalStateException("Property is not available for the selected dates");
+        }
+
         int nightlyPrice = property.getNightlyPrice();
         int totalNights = booking.getTotalNights();
         int total = nightlyPrice * totalNights;
 
+        booking.setCheckInDate(checkInDate);
+        booking.setCheckOutDate(checkOutDate);
+        booking.setTotalNights(totalNights);
         booking.setTotalPrice(total);
         booking.setProperty(property);
         Booking save = bookingRepository.save(booking);
@@ -73,6 +89,11 @@ public class BookingServiceImpl implements BookingService {
                 return;
             }
         }
+//        for(Booking b:bookings){
+//            if (b.getId()==id){
+//                bookings.remove(b);
+//            }
+//        }
     }
 
     public Booking mapToEntity(BookingDto dto){
