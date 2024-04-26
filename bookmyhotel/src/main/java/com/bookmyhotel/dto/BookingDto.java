@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookingDto {
+    private long id;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private Integer totalPrice;

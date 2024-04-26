@@ -4,12 +4,20 @@ import com.bookmyhotel.dto.BookingDto;
 import com.bookmyhotel.entity.Booking;
 import com.bookmyhotel.entity.PropertyUser;
 import com.bookmyhotel.service.BookingService;
+import com.bookmyhotel.service.BucketService;
+import com.bookmyhotel.service.PDFService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -18,10 +26,29 @@ public class BookingController {
 
     @Autowired
     private BookingService bookingService;
+    @Autowired
+    private BucketService bucketService;
 
+    @Autowired
+    private PDFService pdfService;
     @PostMapping("/addNew/{propertyId}")
-    public ResponseEntity<BookingDto> newBooking(@RequestBody BookingDto bookingDto, @AuthenticationPrincipal PropertyUser propertyUser, @PathVariable long propertyId){
+    public ResponseEntity<?> newBooking(@RequestBody BookingDto bookingDto, @AuthenticationPrincipal PropertyUser propertyUser, @PathVariable long propertyId){
         BookingDto saved = bookingService.addBooking(bookingDto, propertyUser,propertyId);
+        //create booking confirmation pdf
+        String filePath ="C:\\Users\\arnab\\OneDrive\\Documents\\pdfBookmyhotel\\" + "booking-confirmation-id-" + saved.getId() + ".pdf";
+        boolean status = pdfService.generatePdf(filePath, saved);
+        if (status){
+            try (FileInputStream inputStream = new FileInputStream(filePath)) {
+                MultipartFile multipartFile = new MockMultipartFile("bookingConfirmation.pdf",new File(filePath).getName(),"application/pdf", inputStream);
+
+                // Upload multipart file to S3 bucket
+                bucketService.uploadFile(multipartFile, "bookmyhotel");
+            } catch (IOException e) {
+                // Consider returning an error response or retry logic
+            }
+        }else {
+            return new ResponseEntity<>("Error with file uploading",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
@@ -36,5 +63,6 @@ public class BookingController {
         bookingService.deleteBooking(propertyUser,id);
         return new ResponseEntity<>("Booking cancel successfully",HttpStatus.OK);
     }
+
 
 }
