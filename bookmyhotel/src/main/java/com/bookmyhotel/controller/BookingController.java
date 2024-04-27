@@ -6,6 +6,7 @@ import com.bookmyhotel.entity.PropertyUser;
 import com.bookmyhotel.service.BookingService;
 import com.bookmyhotel.service.BucketService;
 import com.bookmyhotel.service.PDFService;
+import com.bookmyhotel.service.SMSService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,8 @@ public class BookingController {
     private BookingService bookingService;
     @Autowired
     private BucketService bucketService;
+    @Autowired
+    private SMSService smsService;
 
     @Autowired
     private PDFService pdfService;
@@ -42,12 +45,14 @@ public class BookingController {
                 MultipartFile multipartFile = new MockMultipartFile("bookingConfirmation.pdf",new File(filePath).getName(),"application/pdf", inputStream);
 
                 // Upload multipart file to S3 bucket
-                bucketService.uploadFile(multipartFile, "bookmyhotel");
+                String pdfUrl = bucketService.uploadFile(multipartFile, "bookmyhotel");
+                //sent the booking details through sms
+                smsService.sendSms("+916295486150","Your booking is confirmed with BookMyHotel. Click for more information "+pdfUrl);
             } catch (IOException e) {
                 // Consider returning an error response or retry logic
             }
         }else {
-            return new ResponseEntity<>("Error with file uploading",HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Something went wrong!",HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
@@ -63,6 +68,5 @@ public class BookingController {
         bookingService.deleteBooking(propertyUser,id);
         return new ResponseEntity<>("Booking cancel successfully",HttpStatus.OK);
     }
-
 
 }
