@@ -1,5 +1,6 @@
 package com.bookmyhotel.service.impl;
 
+import com.bookmyhotel.dto.BookingConfirmationDto;
 import com.bookmyhotel.dto.BookingDto;
 import com.bookmyhotel.entity.Booking;
 import com.bookmyhotel.entity.Property;
@@ -27,7 +28,7 @@ public class BookingServiceImpl implements BookingService {
     private ModelMapper modelMapper;
 
     @Override
-    public BookingDto addBooking(BookingDto dto, PropertyUser user,long propertyId) {
+    public BookingConfirmationDto addBooking(BookingDto dto, PropertyUser user,long propertyId) {
 
         Booking booking = mapToEntity(dto);
         booking.setPropertyUser(user);
@@ -56,7 +57,17 @@ public class BookingServiceImpl implements BookingService {
         booking.setTotalPrice(total);
         booking.setProperty(property);
         Booking save = bookingRepository.save(booking);
-        return mapToDto(save);
+        BookingConfirmationDto dtos =new BookingConfirmationDto();
+        dtos.setGuestName(save.getGuestName());
+        dtos.setGuestEmail(save.getGuestEmail());
+        dtos.setGuestMobile(save.getGuestMobile());
+        dtos.setCheckInDate(save.getCheckInDate());
+        dtos.setCheckOutDate(save.getCheckOutDate());
+        dtos.setTotalNights(save.getTotalNights());
+        dtos.setPropertyName(property.getPropertyName());
+        dtos.setTotalPrice(save.getTotalPrice());
+
+        return dtos;
     }
 
     @Override

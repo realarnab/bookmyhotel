@@ -1,5 +1,6 @@
 package com.bookmyhotel.controller;
 
+import com.bookmyhotel.dto.BookingConfirmationDto;
 import com.bookmyhotel.dto.BookingDto;
 import com.bookmyhotel.entity.Booking;
 import com.bookmyhotel.entity.PropertyUser;
@@ -35,7 +36,7 @@ public class BookingController {
     private PDFService pdfService;
     @PostMapping("/addNew/{propertyId}")
     public ResponseEntity<?> newBooking(@RequestBody BookingDto bookingDto, @AuthenticationPrincipal PropertyUser propertyUser, @PathVariable long propertyId){
-        BookingDto saved = bookingService.addBooking(bookingDto, propertyUser,propertyId);
+        BookingConfirmationDto saved = bookingService.addBooking(bookingDto, propertyUser,propertyId);
         //create booking confirmation pdf
         String filePath ="C:\\Users\\arnab\\OneDrive\\Documents\\pdfBookmyhotel\\" + "booking-confirmation-id-" + saved.getId() + ".pdf";
         boolean status = pdfService.generatePdf(filePath, saved);
@@ -46,7 +47,7 @@ public class BookingController {
                 // Upload multipart file to S3 bucket
                 String pdfUrl = bucketService.uploadFile(multipartFile, "bookmyhotel");
                 //sent the booking details through sms
-                smsService.sendSms("+916295486150","Your booking is confirmed with BookMyHotel. Click for more information "+pdfUrl);
+                smsService.sendSms("+91"+saved.getGuestMobile(),"Your booking is confirmed with BookMyHotel. Click for more information "+pdfUrl);
                 emailService.sendMail(saved.getGuestEmail(),"Booking Confirmed with BookMyHotel","Holiday Destination booking confirmation. "+pdfUrl);
             } catch (IOException e) {
                 // Consider returning an error response or retry logic

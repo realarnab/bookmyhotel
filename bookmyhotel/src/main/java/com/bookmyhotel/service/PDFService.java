@@ -1,17 +1,16 @@
 package com.bookmyhotel.service;
 
-import com.bookmyhotel.dto.BookingDto;
+import com.bookmyhotel.dto.BookingConfirmationDto;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.io.FileOutputStream;
 
-@Service
+@Component
 public class PDFService {
-    private static final String PDF_DIRECTORY= "C:\\Users\\arnab\\OneDrive\\Documents\\pdfBookmyhotel";
 
-    public boolean generatePdf(String fileName, BookingDto dto){
+    public boolean generatePdf(String fileName, BookingConfirmationDto dto){
         try {
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(fileName));
@@ -24,11 +23,19 @@ public class PDFService {
             Chunk checkOutDate = new Chunk("Check out date: "+dto.getCheckOutDate(), font);
             //Chunk propertyName = new Chunk("Property Name: "+dto.getProperty(), font);
             Chunk totalNights = new Chunk("Total nights: "+dto.getTotalNights(), font);
+            Chunk propertyName = new Chunk("Property Name: "+dto.getPropertyName(), font);
+            Chunk email = new Chunk("Total nights: "+dto.getGuestEmail(), font);
+            Chunk mobile = new Chunk("Total nights: "+dto.getGuestMobile(), font);
             Chunk totalPrice = new Chunk("Total Price: "+dto.getTotalPrice(), font);
+            //Chunk property= new Chunk("Property: "+dto.getProperty());
 
             document.add(bookingConfirmation);
             document.add(new Paragraph("\n"));
             document.add(guestName);
+            document.add(new Paragraph("\n"));
+            document.add(mobile);
+            document.add(new Paragraph("\n"));
+            document.add(email);
             document.add(new Paragraph("\n"));
             document.add(checkInDate);
             document.add(new Paragraph("\n"));
@@ -37,6 +44,8 @@ public class PDFService {
             //document.add(propertyName);
            // document.add(new Paragraph("\n"));
             document.add(totalNights);
+            document.add(new Paragraph("\n"));
+            document.add(propertyName);
             document.add(new Paragraph("\n"));
             document.add(totalPrice);
             document.add(new Paragraph("\n"));
