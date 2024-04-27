@@ -56,8 +56,11 @@ public class BookingServiceImpl implements BookingService {
         booking.setTotalNights(totalNights);
         booking.setTotalPrice(total);
         booking.setProperty(property);
+
         Booking save = bookingRepository.save(booking);
+
         BookingConfirmationDto dtos =new BookingConfirmationDto();
+        dtos.setId(save.getId());
         dtos.setGuestName(save.getGuestName());
         dtos.setGuestEmail(save.getGuestEmail());
         dtos.setGuestMobile(save.getGuestMobile());
