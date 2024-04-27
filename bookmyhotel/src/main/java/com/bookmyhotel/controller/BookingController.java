@@ -3,10 +3,7 @@ package com.bookmyhotel.controller;
 import com.bookmyhotel.dto.BookingDto;
 import com.bookmyhotel.entity.Booking;
 import com.bookmyhotel.entity.PropertyUser;
-import com.bookmyhotel.service.BookingService;
-import com.bookmyhotel.service.BucketService;
-import com.bookmyhotel.service.PDFService;
-import com.bookmyhotel.service.SMSService;
+import com.bookmyhotel.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +28,8 @@ public class BookingController {
     private BucketService bucketService;
     @Autowired
     private SMSService smsService;
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     private PDFService pdfService;
@@ -48,6 +47,7 @@ public class BookingController {
                 String pdfUrl = bucketService.uploadFile(multipartFile, "bookmyhotel");
                 //sent the booking details through sms
                 smsService.sendSms("+916295486150","Your booking is confirmed with BookMyHotel. Click for more information "+pdfUrl);
+                emailService.sendMail(saved.getGuestEmail(),"Booking Confirmed with BookMyHotel","Holiday Destination booking confirmation. "+pdfUrl);
             } catch (IOException e) {
                 // Consider returning an error response or retry logic
             }

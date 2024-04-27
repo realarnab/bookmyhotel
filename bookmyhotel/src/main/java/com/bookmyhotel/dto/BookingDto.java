@@ -20,6 +20,8 @@ public class BookingDto {
     private Integer totalPrice;
     private Integer totalNights;
     private String guestName;
+    private String guestMobile;
+    private String guestEmail;
     private PropertyUser propertyUser;
     private Property property;
 

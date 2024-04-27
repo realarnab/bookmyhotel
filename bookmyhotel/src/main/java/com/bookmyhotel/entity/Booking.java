@@ -1,5 +1,6 @@
 package com.bookmyhotel.entity;
 
+import com.sun.source.doctree.SeeTree;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +31,12 @@ public class Booking {
 
     @Column(name = "guest_name", nullable = false)
     private String guestName;
+
+    @Column(name = "guest_email",nullable = false)
+    private String guestEmail;
+
+    @Column(name = "guest_mobile",nullable = false)
+    private String guestMobile;
 
     @ManyToOne
     @JoinColumn(name = "property_user_id")
