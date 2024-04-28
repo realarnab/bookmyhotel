@@ -70,6 +70,7 @@ public class PDFService {
             Font boldFont = FontFactory.getFont(FontFactory.COURIER, 12, BaseColor.BLACK);
             Font titleFont = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLUE);
             Font subTitleFont = FontFactory.getFont(FontFactory.COURIER, 14, BaseColor.BLACK);
+            Font signatureFont = FontFactory.getFont(FontFactory.COURIER, 8, BaseColor.BLACK);
 
             // Add document title as a separate paragraph
             Paragraph title = new Paragraph("BookMyHotel - Book Your Property for Your Holiday Destination", titleFont);
@@ -80,7 +81,7 @@ public class PDFService {
             document.add(new Paragraph(" "));
 
             Paragraph subTitle = new Paragraph("Booking Confirmation", subTitleFont);
-            title.setAlignment(Element.ALIGN_TOP);
+            title.setAlignment(Element.ALIGN_CENTER);
             document.add(subTitle);
 
             // Add space before the table
@@ -116,6 +117,10 @@ public class PDFService {
 
             // Add table to document
             document.add(table);
+
+            Paragraph signature = new Paragraph("This is a digitally generated slip, signature is not required.", signatureFont);
+            title.setAlignment(Element.ALIGN_BOTTOM);
+            document.add(signature);
 
             document.close();
 
