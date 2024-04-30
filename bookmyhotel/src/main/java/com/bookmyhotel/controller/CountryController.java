@@ -37,4 +37,10 @@ public class CountryController {
         countryService.deleteCountry(id);
         return new ResponseEntity<>("Country deleted successfully",HttpStatus.OK);
     }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<?> getAllCountries(){
+        List<CountryDto> allCountries = countryService.getAllCountries();
+        return new ResponseEntity<>(allCountries,HttpStatus.OK);
+    }
 }

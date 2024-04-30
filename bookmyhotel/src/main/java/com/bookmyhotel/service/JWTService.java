@@ -5,12 +5,15 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.bookmyhotel.entity.PropertyUser;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 
-@Service
+@Component
 public class JWTService { //this class is used to generate the JWT token during a valid authentication and validate the token during every subsequent request made by the client
 
     @Value("${jwt.algorithm.key}") //it will read the value from the properties file and initialize the variable
@@ -40,4 +43,5 @@ public class JWTService { //this class is used to generate the JWT token during 
         DecodedJWT decodedJWT=JWT.require(algorithm).withIssuer(issuer).build().verify(token); //decode the token
         return decodedJWT.getClaim(USER_NAME).asString(); //extract the username from the token as a string
     }
+
 }

@@ -32,4 +32,5 @@ public class ImageController {
         Images saved = imageService.uploadImage(file, bucketName, propertyId, propertyUser);
         return new ResponseEntity<>(saved, HttpStatus.OK);
     }
+
 }

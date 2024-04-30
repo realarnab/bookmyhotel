@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 
 @Service
 public class BucketService {
@@ -28,6 +29,15 @@ public class BucketService {
             }
         } catch (Exception e) {
             throw new IllegalStateException("Failed to upload file "+e);
+        }
+    }
+
+    public String deleteFile(String bucketName, String fileName) throws IOException {
+        try{
+            amazonS3.deleteObject(bucketName, fileName);
+            return "Successfully Deleted";
+        } catch (AmazonS3Exception e) {
+            throw new IllegalStateException("error!! " + e.getMessage(), e);
         }
     }
 }
