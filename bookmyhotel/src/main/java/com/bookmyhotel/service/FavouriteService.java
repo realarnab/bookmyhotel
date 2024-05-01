@@ -6,5 +6,5 @@ import com.bookmyhotel.entity.PropertyUser;
 
 public interface FavouriteService {
     public FavouriteDto makeFavourite(FavouriteDto favouriteDto, PropertyUser user);
-    public void removeFavourite(FavouriteDto favouriteDto,PropertyUser user);
+    public void removeFavourite(Long id,PropertyUser user);
 }
