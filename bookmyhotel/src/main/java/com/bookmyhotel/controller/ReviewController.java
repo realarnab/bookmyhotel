@@ -1,19 +1,14 @@
 package com.bookmyhotel.controller;
 
-import com.bookmyhotel.entity.Property;
 import com.bookmyhotel.entity.PropertyUser;
 import com.bookmyhotel.entity.Review;
-import com.bookmyhotel.repository.PropertyRepository;
-import com.bookmyhotel.repository.ReviewRepository;
 import com.bookmyhotel.service.ReviewService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/reviews")
@@ -46,10 +41,20 @@ public class ReviewController {
         return new ResponseEntity<>("You have already added a review for this property",HttpStatus.OK);
     }
 
-    @GetMapping("/userReviews") //to get reviews given by the current user loged in
+    @GetMapping("/userReviews") //to get reviews given by the current user logged in
     public ResponseEntity<List<Review>> findReviewsOfUser(@AuthenticationPrincipal PropertyUser user){
 //        List<Review> reviews = reviewRepository.findReviewsByPropertyUser(user);
         List<Review> reviewsOfUser = reviewService.getReviewsOfUser(user);
         return new ResponseEntity<>(reviewsOfUser,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deleteReview/{id}")
+    public ResponseEntity<?> removeReview(@PathVariable long id,@AuthenticationPrincipal PropertyUser user){
+        boolean status = reviewService.deleteReview(id, user);
+        if (status) {
+            return new ResponseEntity<>("Review deleted successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Review not found",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

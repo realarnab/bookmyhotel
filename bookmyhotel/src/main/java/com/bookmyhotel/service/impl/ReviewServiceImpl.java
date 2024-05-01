@@ -3,6 +3,7 @@ package com.bookmyhotel.service.impl;
 import com.bookmyhotel.entity.Property;
 import com.bookmyhotel.entity.PropertyUser;
 import com.bookmyhotel.entity.Review;
+import com.bookmyhotel.exceptions.ReviewNotFoundException;
 import com.bookmyhotel.repository.PropertyRepository;
 import com.bookmyhotel.repository.ReviewRepository;
 import com.bookmyhotel.service.ReviewService;
@@ -42,5 +43,17 @@ public class ReviewServiceImpl  implements ReviewService {
     public List<Review> getReviewsOfUser(PropertyUser user) {
         List<Review> reviews = reviewRepository.findReviewsByPropertyUser(user);
         return reviews;
+    }
+
+    @Override
+    public boolean deleteReview(long id, PropertyUser user) {
+        Review review = reviewRepository.findById(id).orElseThrow(() -> new ReviewNotFoundException("No Review Found with id: " + id));
+
+        if (review.getPropertyUser().getId()==user.getId()){
+            reviewRepository.delete(review);
+        } else {
+            return false;
+        }
+        return true;
     }
 }
