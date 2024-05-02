@@ -27,7 +27,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
                 .requestMatchers("/api/v1/users/addUser","/api/v1/users/login","/api/v1/users/logout").permitAll() //this type of request shouldn't be authenticated, it is open for all
                 .requestMatchers("/api/v1/countries/addCountry","api/v1/countries/getAll","/api/v1/countries/deleteCountry/{id}","/api/v1/favourite","/api/v1/properties/addProperty",
-                        "/api/v1/properties/deleteProperty/{id}","/api/v1/images/upload/{bucketName}/property/{propertyId}","/s3bucket/upload/file/{bucketName}").hasRole("ADMIN") //makes the url only accessible for ADMIN
+                        "/api/v1/properties/deleteProperty/{id}","/api/v1/images/upload/{bucketName}/property/{propertyId}","/s3bucket/upload/file/{bucketName}","/api/v1/properties/update/{id}").hasRole("ADMIN") //makes the url only accessible for ADMIN
                 .requestMatchers("/api/v1/properties/{locationName}","/api/v1/reviews/addReview/{propertyId}").hasRole("USER")
                 .requestMatchers("api/v1/users/profile","/api/v1/booking/addNew/{propertyId}","/api/v1/booking/getBooking",
                         "/api/v1/booking/deleteBooking/{id}","/api/v1/properties/getAll","/api/v1/favourite/remove/{id}","/api/v1/reviews/deleteReview/{id}").hasAnyRole("ADMIN","USER") //makes the url accessible for ADMIN and USER

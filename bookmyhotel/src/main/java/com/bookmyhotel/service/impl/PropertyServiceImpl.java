@@ -44,6 +44,16 @@ public class PropertyServiceImpl implements PropertyService {
         return all;
     }
 
+    @Override
+    public PropertyDto updateProperty(long id, PropertyDto propertyDto) {
+        Property property = propertyRepository.findById(id).orElseThrow(() -> new PropertyNotFound("Property not found with id:  " + id));
+        Property prop = mapToEntity(propertyDto);
+        prop.setId(id);
+        Property saved = propertyRepository.save(prop);
+        PropertyDto dto = mapToDto(saved);
+        return dto;
+    }
+
     public Property mapToEntity(PropertyDto dto){
         return modelMapper.map(dto,Property.class);
     }

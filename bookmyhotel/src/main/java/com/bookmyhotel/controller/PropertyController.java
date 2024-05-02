@@ -47,4 +47,10 @@ public class PropertyController {
         List<Property> all = propertyService.getAll();
         return new ResponseEntity<>(all,HttpStatus.OK);
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateProperty(@PathVariable long id,@RequestBody PropertyDto propertyDto){
+        PropertyDto dto = propertyService.updateProperty(id, propertyDto);
+        return new ResponseEntity<>(dto,HttpStatus.OK);
+    }
 }

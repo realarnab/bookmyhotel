@@ -13,4 +13,6 @@ public interface PropertyService {
     void removeProperty(long id);
 
     List<Property> getAll();
+
+    PropertyDto updateProperty(long id, PropertyDto propertyDto);
 }
