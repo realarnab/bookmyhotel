@@ -53,4 +53,10 @@ public class PropertyController {
         PropertyDto dto = propertyService.updateProperty(id, propertyDto);
         return new ResponseEntity<>(dto,HttpStatus.OK);
     }
+
+    @GetMapping("/getProperty/{propertyName}")
+    public ResponseEntity<?> getPropertyByName(@PathVariable String propertyName){
+        PropertyDto property = propertyService.getProperty(propertyName);
+        return new ResponseEntity<>(property,HttpStatus.OK);
+    }
 }

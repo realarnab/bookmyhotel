@@ -30,7 +30,8 @@ public class SecurityConfig {
                         "/api/v1/properties/deleteProperty/{id}","/api/v1/images/upload/{bucketName}/property/{propertyId}","/s3bucket/upload/file/{bucketName}","/api/v1/properties/update/{id}").hasRole("ADMIN") //makes the url only accessible for ADMIN
                 .requestMatchers("/api/v1/properties/{locationName}","/api/v1/reviews/addReview/{propertyId}").hasRole("USER")
                 .requestMatchers("api/v1/users/profile","/api/v1/booking/addNew/{propertyId}","/api/v1/booking/getBooking",
-                        "/api/v1/booking/deleteBooking/{id}","/api/v1/properties/getAll","/api/v1/favourite/remove/{id}","/api/v1/reviews/deleteReview/{id}").hasAnyRole("ADMIN","USER") //makes the url accessible for ADMIN and USER
+                        "/api/v1/booking/deleteBooking/{id}","/api/v1/properties/getAll","/api/v1/favourite/remove/{id}","/api/v1/reviews/deleteReview/{id}",
+                        "/api/v1/properties/getProperty/{propertyName}").hasAnyRole("ADMIN","USER") //makes the url accessible for ADMIN and USER
                 .requestMatchers("/actuator/**").permitAll()
                 .anyRequest().authenticated(); //any other type of request rather than above should be authenticated
         return http.build(); //Build and return the object of securityFilterChain

@@ -54,6 +54,12 @@ public class PropertyServiceImpl implements PropertyService {
         return dto;
     }
 
+    @Override
+    public PropertyDto getProperty(String propertyName) {
+        Property property = propertyRepository.findByPropertyName(propertyName);
+        return mapToDto(property);
+    }
+
     public Property mapToEntity(PropertyDto dto){
         return modelMapper.map(dto,Property.class);
     }

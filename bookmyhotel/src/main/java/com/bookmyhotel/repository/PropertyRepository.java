@@ -12,4 +12,5 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
     @Query("Select p from Property p JOIN Location l ON p.location=l.id JOIN Country c ON p.country=c.id WHERE l.locationName=:locationName or c.countryName=:locationName")
     List<Property> findPropertyByLocation(@Param("locationName")String locationName); //@Param --> extract the value from the method argument and give it to the custom JPQL query
 
+    Property findByPropertyName(String propertyName);
 }
