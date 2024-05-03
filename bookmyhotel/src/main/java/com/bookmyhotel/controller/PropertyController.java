@@ -59,4 +59,10 @@ public class PropertyController {
         PropertyDto property = propertyService.getProperty(propertyName);
         return new ResponseEntity<>(property,HttpStatus.OK);
     }
+
+    @GetMapping("findProperty/{id}")
+    public ResponseEntity<?> getPropertyById(@PathVariable long id){
+        PropertyDto dto = propertyService.getById(id);
+        return new ResponseEntity<>(dto,HttpStatus.OK);
+    }
 }

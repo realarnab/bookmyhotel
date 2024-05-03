@@ -60,6 +60,12 @@ public class PropertyServiceImpl implements PropertyService {
         return mapToDto(property);
     }
 
+    @Override
+    public PropertyDto getById(long id) {
+        Property property = propertyRepository.findById(id).orElseThrow(() -> new PropertyNotFound("No Property found with id: " + id));
+        return mapToDto(property);
+    }
+
     public Property mapToEntity(PropertyDto dto){
         return modelMapper.map(dto,Property.class);
     }

@@ -17,4 +17,6 @@ public interface PropertyService {
     PropertyDto updateProperty(long id, PropertyDto propertyDto);
 
     PropertyDto getProperty(String propertyName);
+
+    PropertyDto getById(long id);
 }
