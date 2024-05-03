@@ -56,7 +56,7 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public PropertyDto getProperty(String propertyName) {
-        Property property = propertyRepository.findByPropertyName(propertyName);
+        Property property = propertyRepository.findByPropertyName(propertyName).orElseThrow(()->new PropertyNotFound("No Property found with name: "+propertyName));
         return mapToDto(property);
     }
 
