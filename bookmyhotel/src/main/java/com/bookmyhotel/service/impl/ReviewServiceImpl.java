@@ -1,5 +1,6 @@
 package com.bookmyhotel.service.impl;
 
+import com.bookmyhotel.dto.ReviewDto;
 import com.bookmyhotel.entity.Property;
 import com.bookmyhotel.entity.PropertyUser;
 import com.bookmyhotel.entity.Review;
@@ -7,19 +8,24 @@ import com.bookmyhotel.exceptions.ReviewNotFoundException;
 import com.bookmyhotel.repository.PropertyRepository;
 import com.bookmyhotel.repository.ReviewRepository;
 import com.bookmyhotel.service.ReviewService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewServiceImpl  implements ReviewService {
     private ReviewRepository reviewRepository;
     private PropertyRepository propertyRepository;
+    private final ModelMapper modelMapper;
 
-    public ReviewServiceImpl(ReviewRepository reviewRepository, PropertyRepository propertyRepository) {
+    public ReviewServiceImpl(ReviewRepository reviewRepository, PropertyRepository propertyRepository,
+                             ModelMapper modelMapper) {
         this.reviewRepository = reviewRepository;
         this.propertyRepository = propertyRepository;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -55,5 +61,12 @@ public class ReviewServiceImpl  implements ReviewService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public List<ReviewDto> getReviewsOfProperty(String propertyName) {
+        List<Review> reviews = reviewRepository.findReviewByPropertyName(propertyName);
+        List<ReviewDto> collections = reviews.stream().map((element) -> modelMapper.map(element, ReviewDto.class)).collect(Collectors.toList());
+        return collections;
     }
 }

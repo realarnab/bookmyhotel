@@ -1,5 +1,8 @@
 package com.bookmyhotel.controller;
 
+import com.bookmyhotel.dto.PropertyDto;
+import com.bookmyhotel.dto.ReviewDto;
+import com.bookmyhotel.entity.Property;
 import com.bookmyhotel.entity.PropertyUser;
 import com.bookmyhotel.entity.Review;
 import com.bookmyhotel.service.ReviewService;
@@ -56,5 +59,10 @@ public class ReviewController {
         } else {
             return new ResponseEntity<>("Review not found",HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @GetMapping("/propertyReviews/{propertyName}")
+    public ResponseEntity<?> getPropertyReview(@PathVariable String propertyName){
+        List<ReviewDto> dtos = reviewService.getReviewsOfProperty(propertyName);
+        return new ResponseEntity<>(dtos,HttpStatus.OK);
     }
 }

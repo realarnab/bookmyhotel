@@ -11,4 +11,6 @@ public boolean createReview(long propertyId, Review review, PropertyUser user);
 public List<Review> getReviewsOfUser(PropertyUser user);
 
     boolean deleteReview(long id, PropertyUser user);
+
+    List<ReviewDto> getReviewsOfProperty(String propertyName);
 }

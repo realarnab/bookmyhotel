@@ -15,4 +15,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("select r from Review r where r.propertyUser=:user")
     List<Review> findReviewsByPropertyUser(@Param("user") PropertyUser user); //to find the reviews given by a particular user
+
+    @Query("select r from Review r JOIN Property p ON r.property=p.id where p.propertyName=:propertyName")
+    List<Review> findReviewByPropertyName(@Param("propertyName") String propertyName);
 }
