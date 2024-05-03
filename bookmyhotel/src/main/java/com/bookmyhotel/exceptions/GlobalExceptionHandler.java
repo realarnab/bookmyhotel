@@ -36,5 +36,22 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorDetails errorDetails=new ErrorDetails(new Date(),e.getMessage(), webRequest.getDescription(true));
         return new ResponseEntity<>(errorDetails,HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(FavouriteNotFoundException.class)
+    public ResponseEntity<?> handleFavouriteNotFound(FavouriteNotFoundException e,WebRequest webRequest){
+        ErrorDetails errorDetails=new ErrorDetails(new Date(),e.getMessage(),webRequest.getDescription(true));
+        return new ResponseEntity<>(errorDetails,HttpStatus.OK);
+    }
+
+    @ExceptionHandler(ReviewNotFoundException.class)
+    public ResponseEntity<?> handleReviewNotFound(ReviewNotFoundException e,WebRequest webRequest){
+        ErrorDetails errorDetails=new ErrorDetails(new Date(),e.getMessage(), webRequest.getDescription(true));
+        return new ResponseEntity<>(errorDetails,HttpStatus.OK);
+    }
+
+    @ExceptionHandler(UnauthorizedAccessException.class)
+    public ResponseEntity<?> handleUnauthorizedAccess(UnauthorizedAccessException e,WebRequest webRequest){
+        ErrorDetails errorDetails=new ErrorDetails(new Date(),e.getMessage(),webRequest.getDescription(true));
+        return new  ResponseEntity<>(errorDetails,HttpStatus.OK);
+    }
 
 }
