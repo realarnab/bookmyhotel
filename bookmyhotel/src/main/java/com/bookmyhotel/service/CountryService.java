@@ -10,4 +10,6 @@ public interface CountryService {
     public void deleteCountry(long id);
 
     List<CountryDto> getAllCountries();
+
+    CountryDto updateACountry(long id, CountryDto countryDto);
 }

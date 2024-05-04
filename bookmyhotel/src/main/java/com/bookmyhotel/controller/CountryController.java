@@ -43,4 +43,10 @@ public class CountryController {
         List<CountryDto> allCountries = countryService.getAllCountries();
         return new ResponseEntity<>(allCountries,HttpStatus.OK);
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<CountryDto> updateCountry(@PathVariable long id, @RequestBody CountryDto countryDto ){
+        CountryDto dto = countryService.updateACountry(id, countryDto);
+        return new ResponseEntity<>(dto,HttpStatus.OK);
+    }
 }

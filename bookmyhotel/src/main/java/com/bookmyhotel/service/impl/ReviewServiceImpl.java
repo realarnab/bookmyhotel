@@ -8,6 +8,7 @@ import com.bookmyhotel.exceptions.ReviewNotFoundException;
 import com.bookmyhotel.repository.PropertyRepository;
 import com.bookmyhotel.repository.ReviewRepository;
 import com.bookmyhotel.service.ReviewService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -71,6 +72,7 @@ public class ReviewServiceImpl  implements ReviewService {
         return collections;
     }
 
+    @Transactional
     @Override
     public ReviewDto upadateAReview(long id, PropertyUser user,ReviewDto dto) {
         Review review = modelMapper.map(dto, Review.class);

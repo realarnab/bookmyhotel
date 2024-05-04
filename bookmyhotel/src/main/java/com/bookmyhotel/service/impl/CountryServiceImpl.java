@@ -42,5 +42,16 @@ public class CountryServiceImpl implements CountryService {
         List<CountryDto> countries = all.stream().map((element) -> modelMapper.map(element, CountryDto.class)).collect(Collectors.toList());
         return countries;
     }
+
+    @Override
+    public CountryDto updateACountry(long id, CountryDto countryDto) {
+        Country country = countryRepository.findById(id).orElseThrow(() -> new CountryNotFoundException("Country not found with id: " + id));
+        String countryName = countryDto.getCountryName();
+        countryRepository.updateName(id, countryName);
+        CountryDto dto=new CountryDto();;
+        dto.setId(country.getId());
+        dto.setCountryName(countryName);
+        return dto;
+    }
 }
 
