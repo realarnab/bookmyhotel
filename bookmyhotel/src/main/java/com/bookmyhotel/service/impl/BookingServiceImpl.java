@@ -99,7 +99,8 @@ public class BookingServiceImpl implements BookingService {
         while (iterator.hasNext()){
             Booking booking = iterator.next();
             if (booking.getId() == id){
-                iterator.remove();
+                bookingRepository.deleteById(id);
+                //iterator.remove();
                 return;
             }
         }
