@@ -79,6 +79,7 @@ public class ReviewServiceImpl  implements ReviewService {
         Iterator<Review> iterator = reviewsByPropertyUser.iterator();
         while (iterator.hasNext()){
             if (iterator.next().getId()==id){
+                reviewRepository.deleteById(id);
                 Review saved = reviewRepository.save(review);
                 return modelMapper.map(saved,ReviewDto.class);
             }
