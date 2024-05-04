@@ -65,4 +65,10 @@ public class ReviewController {
         List<ReviewDto> dtos = reviewService.getReviewsOfProperty(propertyName);
         return new ResponseEntity<>(dtos,HttpStatus.OK);
     }
+
+    @PutMapping("update/{id}")
+    public ResponseEntity<?> updateReview(@PathVariable long id,@AuthenticationPrincipal PropertyUser user,@RequestBody ReviewDto dto){
+        ReviewDto reviewDto = reviewService.upadateAReview(id, user, dto);
+        return new ResponseEntity<>(reviewDto,HttpStatus.OK);
+    }
 }

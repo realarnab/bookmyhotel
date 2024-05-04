@@ -13,4 +13,6 @@ public List<Review> getReviewsOfUser(PropertyUser user);
     boolean deleteReview(long id, PropertyUser user);
 
     List<ReviewDto> getReviewsOfProperty(String propertyName);
+
+    ReviewDto upadateAReview(long id, PropertyUser user,ReviewDto dto);
 }

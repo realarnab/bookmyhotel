@@ -11,6 +11,7 @@ import com.bookmyhotel.service.ReviewService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -68,5 +69,20 @@ public class ReviewServiceImpl  implements ReviewService {
         List<Review> reviews = reviewRepository.findReviewByPropertyName(propertyName);
         List<ReviewDto> collections = reviews.stream().map((element) -> modelMapper.map(element, ReviewDto.class)).collect(Collectors.toList());
         return collections;
+    }
+
+    @Override
+    public ReviewDto upadateAReview(long id, PropertyUser user,ReviewDto dto) {
+        Review review = modelMapper.map(dto, Review.class);
+        review.setPropertyUser(user);
+        List<Review> reviewsByPropertyUser = reviewRepository.findReviewsByPropertyUser(user);
+        Iterator<Review> iterator = reviewsByPropertyUser.iterator();
+        while (iterator.hasNext()){
+            if (iterator.next().getId()==id){
+                Review saved = reviewRepository.save(review);
+                return modelMapper.map(saved,ReviewDto.class);
+            }
+        }
+        return null;
     }
 }
