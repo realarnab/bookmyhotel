@@ -37,8 +37,8 @@ public class ReviewController {
 //        review.setPropertyUser(propertyUser); //set the user details in the review object and both
 //        reviewRepository.save(review); //save the details
 //        return new ResponseEntity<>("Review added successfully", HttpStatus.CREATED);
-        boolean status = reviewService.createReview(propertyId, review, propertyUser);
-        if (status){
+        ReviewDto dto = reviewService.createReview(propertyId, review, propertyUser);
+        if (dto!=null){
             return new ResponseEntity<>("Review added successfully",HttpStatus.CREATED);
         }
         return new ResponseEntity<>("You have already added a review for this property",HttpStatus.OK);

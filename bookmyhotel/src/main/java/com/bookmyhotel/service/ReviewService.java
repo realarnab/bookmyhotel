@@ -7,7 +7,7 @@ import com.bookmyhotel.entity.Review;
 import java.util.List;
 
 public interface ReviewService {
-public boolean createReview(long propertyId, Review review, PropertyUser user);
+public ReviewDto createReview(long propertyId, Review review, PropertyUser user);
 public List<Review> getReviewsOfUser(PropertyUser user);
 
     boolean deleteReview(long id, PropertyUser user);

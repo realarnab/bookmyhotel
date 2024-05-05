@@ -4,6 +4,7 @@ import com.bookmyhotel.dto.ReviewDto;
 import com.bookmyhotel.entity.Property;
 import com.bookmyhotel.entity.PropertyUser;
 import com.bookmyhotel.entity.Review;
+import com.bookmyhotel.exceptions.PropertyNotFound;
 import com.bookmyhotel.exceptions.ReviewNotFoundException;
 import com.bookmyhotel.repository.PropertyRepository;
 import com.bookmyhotel.repository.ReviewRepository;
@@ -32,19 +33,19 @@ public class ReviewServiceImpl  implements ReviewService {
 
 
     @Override
-    public boolean createReview(long propertyId, Review review, PropertyUser user) {
-        Optional<Property> opProperty = propertyRepository.findById(propertyId); //firstly checked that property is present or not for which review be created using propertyId
-        Property property = opProperty.get(); //convert it to the entity object
+    public ReviewDto createReview(long propertyId, Review review, PropertyUser user) {
+        Property property = propertyRepository.findById(propertyId).orElseThrow(() -> new PropertyNotFound("No Property found with this id: " + propertyId));//firstly checked that property is present or not for which review be created using propertyId
+//Property property = opProperty.get(); //convert it to the entity object
 
         Review r = reviewRepository.findReviewByUser(property, user); //this method will check is there any review present of this user on this  property or not based on userId and propertyId will be extract from property object and propertyUser object
         if (r != null) { //if present then it will return the response to  the client
-            return false;
+            return null;
         }
         //if any review is not present of the user then it will create the review of the user using following steps
         review.setProperty(property); //set the property details to the review object
         review.setPropertyUser(user); //set the user details in the review object and both
-        reviewRepository.save(review); //save the details
-        return true;
+        Review saved = reviewRepository.save(review);//save the details
+        return modelMapper.map(saved,ReviewDto.class);
     }
 
     @Override
@@ -81,7 +82,7 @@ public class ReviewServiceImpl  implements ReviewService {
         Iterator<Review> iterator = reviewsByPropertyUser.iterator();
         while (iterator.hasNext()){
             Review next = iterator.next();
-            if (next.getId()==id){
+            if (next.getId() == id){
 //                reviewRepository.deleteById(id);
 //                Review saved = reviewRepository.save(review);
                 reviewRepository.updateContentOfReview(id, dto.getContent());
