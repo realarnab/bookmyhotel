@@ -3,7 +3,9 @@ package com.bookmyhotel.repository;
 import com.bookmyhotel.entity.Property;
 import com.bookmyhotel.entity.PropertyUser;
 import com.bookmyhotel.entity.Review;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -18,4 +20,10 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("select r from Review r JOIN Property p ON r.property=p.id where p.propertyName=:propertyName")
     List<Review> findReviewByPropertyName(@Param("propertyName") String propertyName);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Review r SET r.content = :content WHERE r.id = :id")
+    void updateContentOfReview(@Param("id") long id,@Param("content") String content);;
+
 }

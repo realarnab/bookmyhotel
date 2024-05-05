@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class ReviewServiceImpl  implements ReviewService {
-    private ReviewRepository reviewRepository;
-    private PropertyRepository propertyRepository;
+    private final ReviewRepository reviewRepository;
+    private final PropertyRepository propertyRepository;
     private final ModelMapper modelMapper;
 
     public ReviewServiceImpl(ReviewRepository reviewRepository, PropertyRepository propertyRepository,
@@ -80,10 +80,13 @@ public class ReviewServiceImpl  implements ReviewService {
         List<Review> reviewsByPropertyUser = reviewRepository.findReviewsByPropertyUser(user);
         Iterator<Review> iterator = reviewsByPropertyUser.iterator();
         while (iterator.hasNext()){
-            if (iterator.next().getId()==id){
-                reviewRepository.deleteById(id);
-                Review saved = reviewRepository.save(review);
-                return modelMapper.map(saved,ReviewDto.class);
+            Review next = iterator.next();
+            if (next.getId()==id){
+//                reviewRepository.deleteById(id);
+//                Review saved = reviewRepository.save(review);
+                reviewRepository.updateContentOfReview(id, dto.getContent());
+                //Review next = iterator.next();
+                return modelMapper.map(next,ReviewDto.class);
             }
         }
         return null;
