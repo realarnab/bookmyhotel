@@ -11,7 +11,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FavouriteServiceImpl implements FavouriteService {
@@ -39,6 +41,13 @@ public class FavouriteServiceImpl implements FavouriteService {
         } else {
             throw new UnauthorizedAccessException("'User is not authorized to access");
         }
+    }
+
+    @Override
+    public List<FavouriteDto> getAllFavouriteOfUser(PropertyUser user) {
+        List<Favourite> favourites = favouriteRepository.findByPropertyUser(user);
+        List<FavouriteDto> favoriteDtos = favourites.stream().map((element) -> modelMapper.map(element, FavouriteDto.class)).collect(Collectors.toList());
+        return favoriteDtos;
     }
 
     public Favourite mapToEntity(FavouriteDto dto){

@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/favourite")
 public class FavouriteController {
@@ -31,4 +33,9 @@ public class FavouriteController {
         return new ResponseEntity<>("Remove favourite successfully",HttpStatus.OK);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<FavouriteDto>> allFavorite(@AuthenticationPrincipal PropertyUser user){
+        List<FavouriteDto> allFavouriteOfUser = favouriteService.getAllFavouriteOfUser(user);
+        return new ResponseEntity<>(allFavouriteOfUser,HttpStatus.OK);
+    }
 }
