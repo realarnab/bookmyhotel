@@ -47,9 +47,9 @@ public class BookingServiceImpl implements BookingService {
             throw new IllegalStateException("Property is not available for the selected dates");
         }
 
-        int nightlyPrice = property.getNightlyPrice();
+        double nightlyPrice = property.getNightlyPrice();
         int totalNights = booking.getTotalNights();
-        int total = nightlyPrice * totalNights;
+        double total = nightlyPrice * totalNights * (0.18);
 
         booking.setCheckInDate(checkInDate);
         booking.setCheckOutDate(checkOutDate);

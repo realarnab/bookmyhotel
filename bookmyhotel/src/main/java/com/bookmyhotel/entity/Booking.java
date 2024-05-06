@@ -24,7 +24,7 @@ public class Booking {
     private LocalDate checkOutDate;
 
     @Column(name = "total_price")
-    private Integer totalPrice;
+    private Double totalPrice;
 
     @Column(name = "total_nights",nullable = false)
     private Integer totalNights;

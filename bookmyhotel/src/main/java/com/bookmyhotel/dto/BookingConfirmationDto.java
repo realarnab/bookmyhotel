@@ -15,7 +15,7 @@ public class BookingConfirmationDto {
     private long id;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
-    private Integer totalPrice;
+    private Double totalPrice;
     private Integer totalNights;
     private String guestName;
     private String guestMobile;
