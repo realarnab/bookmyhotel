@@ -49,7 +49,7 @@ public class BookingServiceImpl implements BookingService {
 
         double nightlyPrice = property.getNightlyPrice();
         int totalNights = booking.getTotalNights();
-        double total = nightlyPrice * totalNights * (0.18);
+        double total =(nightlyPrice * totalNights) + (nightlyPrice * totalNights * (0.18));
 
         booking.setCheckInDate(checkInDate);
         booking.setCheckOutDate(checkOutDate);
