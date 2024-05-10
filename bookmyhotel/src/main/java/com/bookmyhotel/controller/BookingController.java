@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +18,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/booking")
@@ -34,7 +36,11 @@ public class BookingController {
     @Autowired
     private PDFService pdfService;
     @PostMapping("/addNew/{propertyId}")
-    public ResponseEntity<?> newBooking(@RequestBody BookingDto bookingDto, @AuthenticationPrincipal PropertyUser propertyUser, @PathVariable long propertyId){
+    public ResponseEntity<?> newBooking(@RequestBody BookingDto bookingDto, @AuthenticationPrincipal PropertyUser propertyUser, @PathVariable long propertyId, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            String msg = bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.joining("\n"));
+            return new ResponseEntity<>(msg,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         BookingConfirmationDto saved = bookingService.addBooking(bookingDto, propertyUser,propertyId);
         //create booking confirmation pdf
         String filePath ="C:\\Users\\arnab\\OneDrive\\Documents\\pdfBookmyhotel\\" + "booking-confirmation-id-" + saved.getId() + ".pdf";

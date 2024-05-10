@@ -2,6 +2,7 @@ package com.bookmyhotel.dto;
 
 import com.bookmyhotel.entity.Property;
 import com.bookmyhotel.entity.PropertyUser;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,9 +19,19 @@ public class BookingDto {
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private Double totalPrice;
+
+    @NotEmpty
+    @Positive
     private Integer totalNights;
+
+    @NotNull
     private String guestName;
+
+    @NotNull
+    @Size(min = 10,max = 10)
     private String guestMobile;
+
+    @Email
     private String guestEmail;
     private PropertyUser propertyUser;
     private Property property;
