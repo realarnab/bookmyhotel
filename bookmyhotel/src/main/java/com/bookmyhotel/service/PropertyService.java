@@ -12,7 +12,7 @@ public interface PropertyService {
 
     void removeProperty(long id);
 
-    List<Property> getAll();
+    List<Property> getAll(int pageNo,int pageSize,String sortBy,String sortDir);
 
     PropertyDto updateProperty(long id, PropertyDto propertyDto);
 

@@ -43,8 +43,12 @@ public class PropertyController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<Property>> getAllProperties(){
-        List<Property> all = propertyService.getAll();
+    public ResponseEntity<List<Property>> getAllProperties(@RequestParam(name = "pageNo",defaultValue = "0",required = false) int pageNo,
+                                                           @RequestParam(name = "pageSize",defaultValue = "5",required = false) int pageSize,
+                                                           @RequestParam(name = "sortBy",defaultValue = "id",required = false) String sortBy,
+                                                           @RequestParam(name = "sortDir",defaultValue = "asc",required = false) String sortDir)
+    {
+        List<Property> all = propertyService.getAll(pageNo,pageSize,sortBy,sortDir);
         return new ResponseEntity<>(all,HttpStatus.OK);
     }
 

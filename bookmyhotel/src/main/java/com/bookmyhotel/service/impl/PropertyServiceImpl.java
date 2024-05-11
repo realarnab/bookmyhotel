@@ -7,6 +7,10 @@ import com.bookmyhotel.repository.PropertyRepository;
 import com.bookmyhotel.service.PropertyService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,8 +43,11 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public List<Property> getAll() {
-        List<Property> all = propertyRepository.findAll();
+    public List<Property> getAll(int pageNo,int pageSize,String sortBy,String sortDir) {
+        Sort sort=sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())?Sort.by(sortBy).ascending():Sort.by(sortBy).descending(); //used ternary operator to check that whether the condition is ASC or DESC
+        Pageable pageable = PageRequest.of(pageNo,pageSize, sort);
+        Page<Property> pages = propertyRepository.findAll(pageable);
+        List<Property> all = pages.getContent();
         return all;
     }
 
