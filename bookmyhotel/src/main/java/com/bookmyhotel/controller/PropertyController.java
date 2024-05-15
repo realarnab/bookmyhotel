@@ -29,7 +29,7 @@ public class PropertyController {
     @PostMapping("/addProperty") //add new property
     public ResponseEntity<?> addNewCountry(@Valid @RequestBody PropertyDto dto, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            String messages = bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.joining("/n"));
+            String messages = bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.joining("\n"));
             return new ResponseEntity<>(messages,HttpStatus.NOT_FOUND);
         }
         PropertyDto propertyDto = propertyService.addCountry(dto);

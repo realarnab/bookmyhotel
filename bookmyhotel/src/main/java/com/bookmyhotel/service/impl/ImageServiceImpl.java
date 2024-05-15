@@ -3,11 +3,13 @@ package com.bookmyhotel.service.impl;
 import com.bookmyhotel.entity.Images;
 import com.bookmyhotel.entity.Property;
 import com.bookmyhotel.entity.PropertyUser;
+import com.bookmyhotel.exceptions.ImageNotFoundException;
 import com.bookmyhotel.exceptions.PropertyNotFound;
 import com.bookmyhotel.repository.ImagesRepository;
 import com.bookmyhotel.repository.PropertyRepository;
 import com.bookmyhotel.service.BucketService;
 import com.bookmyhotel.service.ImageService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,5 +36,13 @@ public class ImageServiceImpl implements ImageService {
         images.setPropertyUser(propertyUser);
         Images savedImage = imagesRepository.save(images);
         return savedImage;
+    }
+
+    @Override
+    @Transactional
+    public void deleteImage(long id,String bucketName) {
+        Images image = imagesRepository.findById(id).orElseThrow(() -> new ImageNotFoundException("No Image is found with id: " + id));
+        bucketService.deleteFile(image.getImageUrl(),bucketName);
+        imagesRepository.deleteById(id);
     }
 }

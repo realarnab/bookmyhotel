@@ -21,10 +21,10 @@ public class BucketController {
         return new ResponseEntity<>(service.uploadFile(file,bucketName), HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/file/{bucketName}/{fileName}")
-    public ResponseEntity<String> deleteFile(@PathVariable String bucketName, @PathVariable String fileName) throws IOException {
-        String message= service.deleteFile(bucketName, fileName);
-        return new ResponseEntity<>(message, HttpStatus.OK);
-    }
+//    @DeleteMapping("/delete/file/{bucketName}/{fileName}")
+//    public ResponseEntity<String> deleteFile(@PathVariable String bucketName, @PathVariable String fileName) throws IOException {
+//        String message= service.deleteFile(bucketName, fileName);
+//        return new ResponseEntity<>(message, HttpStatus.OK);
+//    }
 
 }

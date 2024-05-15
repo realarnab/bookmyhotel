@@ -2,6 +2,7 @@ package com.bookmyhotel.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,12 +33,21 @@ public class BucketService {
         }
     }
 
-    public String deleteFile(String bucketName, String fileName) throws IOException {
-        try{
-            amazonS3.deleteObject(bucketName, fileName);
-            return "Successfully Deleted";
-        } catch (AmazonS3Exception e) {
-            throw new IllegalStateException("error!! " + e.getMessage(), e);
-        }
+//    public String deleteFile(String bucketName, String fileName) throws IOException {
+//        try{
+//            amazonS3.deleteObject(bucketName, fileName);
+//            return "Successfully Deleted";
+//        } catch (AmazonS3Exception e) {
+//            throw new IllegalStateException("error!! " + e.getMessage(), e);
+//        }
+//    }
+    public void deleteFile(String fileUrl,String bucketName) {
+        String key = getKeyFromUrl(fileUrl);
+        amazonS3.deleteObject(new DeleteObjectRequest(bucketName, key));
+    }
+
+    private String getKeyFromUrl(String fileUrl) {
+        // Extract key from S3 URL
+        return fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
     }
 }

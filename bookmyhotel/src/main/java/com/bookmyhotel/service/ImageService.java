@@ -8,4 +8,6 @@ import java.awt.*;
 
 public interface ImageService {
     public Images uploadImage(MultipartFile file, String bucketName, long propertyId, PropertyUser propertyUser);
+
+    void deleteImage(long id,String bucketName);
 }

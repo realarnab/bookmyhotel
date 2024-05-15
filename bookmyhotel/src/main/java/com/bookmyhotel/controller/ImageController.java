@@ -33,4 +33,10 @@ public class ImageController {
         return new ResponseEntity<>(saved, HttpStatus.OK);
     }
 
+    @DeleteMapping("/delete/{bucketName}/{id}")
+    public ResponseEntity<?> deleteImage(@PathVariable long id,@PathVariable String bucketName){
+        imageService.deleteImage(id,bucketName);
+        return new ResponseEntity<>("Image deleted successfully",HttpStatus.OK);
+    }
+
 }
