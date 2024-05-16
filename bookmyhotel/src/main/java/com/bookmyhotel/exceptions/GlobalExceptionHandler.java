@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.awt.font.ImageGraphicAttribute;
 import java.util.Date;
 
 @RestControllerAdvice //make this class as global exception handler class for the application
@@ -51,6 +52,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> handleUnauthorizedAccess(UnauthorizedAccessException e,WebRequest webRequest){
         ErrorDetails errorDetails=new ErrorDetails(new Date(),e.getMessage(),webRequest.getDescription(true));
         return new  ResponseEntity<>(errorDetails,HttpStatus.OK);
+    }
+
+    @ExceptionHandler(ImageNotFoundException.class)
+    public ResponseEntity<?> handleImageNotFound(ImageNotFoundException e,WebRequest webRequest){
+        ErrorDetails errorDetails=new ErrorDetails(new Date(),e.getMessage(),webRequest.getDescription(true));
+        return new ResponseEntity<>(errorDetails,HttpStatus.OK);
     }
 
 }
