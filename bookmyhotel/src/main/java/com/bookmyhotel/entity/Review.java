@@ -19,7 +19,7 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "property_id")
-    private Property property;         //perform the many to one mapping
+    private Property property;         //perform the many-to-one mapping
 
     @ManyToOne
     @JoinColumn(name = "property_user_id")
