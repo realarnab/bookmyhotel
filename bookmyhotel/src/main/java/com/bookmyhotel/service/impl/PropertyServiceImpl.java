@@ -27,7 +27,7 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public PropertyDto addCountry(PropertyDto dto) {
+    public PropertyDto addProperty(PropertyDto dto) {
         Property property = mapToEntity(dto);
         Property save = propertyRepository.save(property);
         PropertyDto propertyDto = mapToDto(property);

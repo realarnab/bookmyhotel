@@ -32,7 +32,7 @@ public class PropertyController {
             String messages = bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.joining("\n"));
             return new ResponseEntity<>(messages,HttpStatus.NOT_FOUND);
         }
-        PropertyDto propertyDto = propertyService.addCountry(dto);
+        PropertyDto propertyDto = propertyService.addProperty(dto);
         return new ResponseEntity<>(propertyDto,HttpStatus.CREATED);
     }
 

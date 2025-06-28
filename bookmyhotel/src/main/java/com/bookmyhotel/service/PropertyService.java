@@ -8,7 +8,7 @@ import java.util.List;
 public interface PropertyService {
     public List<Property> findAllProperty(String locationName);
 
-    PropertyDto addCountry(PropertyDto dto);
+    PropertyDto addProperty(PropertyDto dto);
 
     void removeProperty(long id);
 
